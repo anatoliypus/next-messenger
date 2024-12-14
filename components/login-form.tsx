@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { useActionState } from 'react';
 
+import { login } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input, InputError } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useActionState } from 'react';
-import { login } from '@/app/actions';
 
 export function LoginForm() {
   const [state, formAction] = useActionState(login, null);
@@ -27,9 +27,9 @@ export function LoginForm() {
           <div className="grid gap-2">
             <div className="flex items-center">
               <Label htmlFor="password">Password</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline">
+              {/* <Link href="#" className="ml-auto inline-block text-sm underline">
                 Forgot your password?
-              </Link>
+              </Link> */}
             </div>
             <Input
               name="password"

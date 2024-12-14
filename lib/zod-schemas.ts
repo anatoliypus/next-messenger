@@ -15,6 +15,7 @@ export const PASSWORD_MAX_LENGTH_ERROR = `Password must be at most ${MAX_PASSWOR
 export const PASSWORD_UPPERCASE_ERROR = 'Password must contain at least one uppercase letter';
 export const PASSWORD_LOWERCASE_ERROR = 'Password must contain at least one lowercase letter';
 export const PASSWORD_NUMBER_ERROR = 'Password must contain at least one number';
+export const PASSWORD_MISMATCH_ERROR = 'Passwords must be equal';
 
 // Primitives validation
 
@@ -64,9 +65,14 @@ export const LoginFormSchema = z.object({
   password: PasswordLoginSchema,
 });
 
-export const RegisterFormSchema = z.object({
-  name: UserNameSchema,
-  email: EmailSchema,
-  password: PasswordRegisterSchema,
-  confirmPassword: PasswordLoginSchema,
-});
+export const RegisterFormSchema = z
+  .object({
+    name: UserNameSchema,
+    email: EmailSchema,
+    password: PasswordRegisterSchema,
+    confirmPassword: PasswordLoginSchema,
+  })
+  .refine((object) => object.password === object.confirmPassword, {
+    message: PASSWORD_MISMATCH_ERROR,
+    path: ['confirmPassword'],
+  });

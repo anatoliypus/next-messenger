@@ -1,3 +1,10 @@
+export type FormState = {
+  errors?: {
+    [key: string]: string[] | undefined;
+  };
+  message?: string | null;
+};
+
 export type LoginFormState = {
   errors?: {
     email?: string[];
@@ -14,4 +21,4 @@ export type RegisterFormState = {
     confirmPassword?: string[];
   };
   message?: string | null;
-};
+} | null;

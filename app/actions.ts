@@ -1,21 +1,39 @@
 'use server';
 
-import { LoginFormState } from '@/lib/types';
-import { LoginFormSchema } from '@/lib/zod-schemas';
+import { z } from 'zod';
 
-export async function login(
-  prevState: LoginFormState,
+import { FormState, LoginFormState, RegisterFormState } from '@/lib/types';
+import { LoginFormSchema, RegisterFormSchema } from '@/lib/zod-schemas';
+
+async function validateForm(
   formData: FormData,
-): Promise<LoginFormState> {
-  const validated = LoginFormSchema.safeParse(Object.fromEntries(formData.entries()));
+  schema: z.ZodSchema,
+  errorMesssage = 'Invaild data',
+  okMessage = 'OK',
+): Promise<FormState> {
+  const validated = schema.safeParse(Object.fromEntries(formData.entries()));
   if (!validated.success) {
     return {
       errors: validated.error.flatten().fieldErrors,
-      message: 'Invalid email or/and password',
+      message: errorMesssage,
     };
   }
   return {
     errors: {},
-    message: 'ok'
+    message: okMessage,
   };
+}
+
+export async function login(
+  previousState: LoginFormState,
+  formData: FormData,
+): Promise<LoginFormState> {
+  return validateForm(formData, LoginFormSchema, 'Invalid email or/and password', 'ok');
+}
+
+export async function register(
+  state: RegisterFormState,
+  formData: FormData,
+): Promise<RegisterFormState> {
+  return validateForm(formData, RegisterFormSchema, 'Please fill all the fields properly', 'ok');
 }
