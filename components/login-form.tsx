@@ -10,7 +10,7 @@ import { Input, InputError } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export function LoginForm() {
-  const [state, formAction] = useActionState(login, null);
+  const [state, formAction] = useActionState(login, {});
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>

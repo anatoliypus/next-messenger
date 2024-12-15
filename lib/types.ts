@@ -11,7 +11,7 @@ export type LoginFormState = {
     password?: string[];
   };
   message?: string | null;
-} | null;
+};
 
 export type RegisterFormState = {
   errors?: {
@@ -21,4 +21,4 @@ export type RegisterFormState = {
     confirmPassword?: string[];
   };
   message?: string | null;
-} | null;
+};
